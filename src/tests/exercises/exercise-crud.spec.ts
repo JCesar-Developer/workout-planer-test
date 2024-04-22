@@ -1,4 +1,4 @@
-import { test, expect } from '../fixtures/fixture-exercise-crud'
+import { test, expect } from '../../fixtures/fixture-exercise-crud'
 
 //DICTIONARIES ---
 enum DialogDetails {
@@ -6,7 +6,7 @@ enum DialogDetails {
   UpdateTitle = 'Editar Ejercicio',
 }
 
-enum CardDetails {
+enum ExerciseCardDetails {
   NewCardName = 'Test exercise',
   UpdatedCardName = 'Test exercise updated',
 }
@@ -58,48 +58,48 @@ test('Form should throw an error if the exercise name has not enough letters', a
 
 test('Form should display a success message if a new exercise is created successfully', async ({ exercisePage, exerciseForm, toastHandler }) => {
   await exercisePage.openCreateExerciseDialog();
-  await exerciseForm.fillExerciseName(CardDetails.NewCardName);
+  await exerciseForm.fillExerciseName(ExerciseCardDetails.NewCardName);
   await exerciseForm.saveExercise();
   await new Promise(resolve => setTimeout(resolve, 500));
   await toastHandler.showsToastMessage(toastMessage.status.success, toastMessage.message.successCreated);
 });
 
 test('Form should have created a new exercise', async ({ exerciseCardHandler }) => {
-  await exerciseCardHandler.cardExists(CardDetails.NewCardName);
+  await exerciseCardHandler.cardExists(ExerciseCardDetails.NewCardName);
 });
 
 //Update
 test('Dialog update exercise exists', async ({ exerciseCardHandler, exerciseForm }) => {
-  await exerciseCardHandler.openUpdateExerciseDialog(CardDetails.NewCardName);
+  await exerciseCardHandler.openUpdateExerciseDialog(ExerciseCardDetails.NewCardName);
   await exerciseForm.dialogExists();
 })
 
 test('Dialog should have update title', async ({ exerciseCardHandler, exerciseForm }) => {
-  await exerciseCardHandler.openUpdateExerciseDialog(CardDetails.NewCardName);
+  await exerciseCardHandler.openUpdateExerciseDialog(ExerciseCardDetails.NewCardName);
   await exerciseForm.hasTitle(DialogDetails.UpdateTitle);
 });
 
 test('Form should display a success message if an exercise have been updated successfully', async ({ exerciseCardHandler, exerciseForm, toastHandler }) => {
-  await exerciseCardHandler.openUpdateExerciseDialog(CardDetails.NewCardName);
-  await exerciseForm.fillExerciseName(CardDetails.UpdatedCardName);
+  await exerciseCardHandler.openUpdateExerciseDialog(ExerciseCardDetails.NewCardName);
+  await exerciseForm.fillExerciseName(ExerciseCardDetails.UpdatedCardName);
   await exerciseForm.saveExercise();
   await new Promise(resolve => setTimeout(resolve, 500));
   await toastHandler.showsToastMessage(toastMessage.status.success, toastMessage.message.successUpdated);
 });
 
 test('Form should have updated an exercise', async ({ exerciseCardHandler }) => {
-  await exerciseCardHandler.cardExists(CardDetails.UpdatedCardName);
+  await exerciseCardHandler.cardExists(ExerciseCardDetails.UpdatedCardName);
 });
 
 //Delete
 test('Form should display a success message if an exercise have been deleted successfully', async ({ exerciseCardHandler, exerciseForm, toastHandler }) => {
-  await exerciseCardHandler.openUpdateExerciseDialog(CardDetails.UpdatedCardName);
+  await exerciseCardHandler.openUpdateExerciseDialog(ExerciseCardDetails.UpdatedCardName);
   await exerciseForm.deleteExercise();
   await new Promise(resolve => setTimeout(resolve, 500));
   await toastHandler.showsToastMessage(toastMessage.status.success, toastMessage.message.successDeleted);
 });
 
 test('Form should have deleted an exercise', async ({ exerciseCardHandler }) => {
-  await expect(exerciseCardHandler.getCardByName(CardDetails.NewCardName)).not.toBeVisible();
-  await expect(exerciseCardHandler.getCardByName(CardDetails.UpdatedCardName)).not.toBeVisible();
+  await expect(exerciseCardHandler.getCardByName(ExerciseCardDetails.NewCardName)).not.toBeVisible();
+  await expect(exerciseCardHandler.getCardByName(ExerciseCardDetails.UpdatedCardName)).not.toBeVisible();
 });

@@ -8,11 +8,11 @@ export class ExerciseCardHandler {
   }
 
   //GETTERS ---
-  getCardByName( name: string ): Locator {
+  public getCardByName( name: string ): Locator {
     return this.exerciseCards.filter({ hasText: name });
   }
   
-  getExerciseCardsByCategory( category: string ): Locator {
+  public getExerciseCardsByCategory( category: string ): Locator {
     return this.exerciseCards.filter({ hasText: category });
   }
 
@@ -23,7 +23,8 @@ export class ExerciseCardHandler {
 
   //ASSERTIONS ---
   async cardExists( name: string ): Promise<void> {
-    await expect(this.getCardByName(name)).toBeVisible();
+    const exerciseCard = this.getCardByName(name);
+    await expect(exerciseCard).toBeVisible();
   }
 
   async hasNoExerciseCards(): Promise<void> {
@@ -37,8 +38,8 @@ export class ExerciseCardHandler {
   }
 
   async hasExerciseCards(): Promise<void> {
-    const exerciseCards = await this.exerciseCards.count();
-    expect(exerciseCards).toBeGreaterThan(1);
+    const totalExerciseCards = await this.exerciseCards.count();
+    expect(totalExerciseCards).toBeGreaterThan(1);
   }
 
   async hasExerciseCardsWithCategory( category: string ): Promise<void> {
