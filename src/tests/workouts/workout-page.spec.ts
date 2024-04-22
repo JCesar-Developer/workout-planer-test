@@ -1,4 +1,4 @@
-import { test } from '../../fixtures/fixture-workout-page';
+import { test } from './fixture-workout-page';
 
 //DICTIONARIES ---
 enum PageDetails {

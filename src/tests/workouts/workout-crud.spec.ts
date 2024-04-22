@@ -1,4 +1,4 @@
-import { expect, test } from '../../fixtures/fixture-workout-crud';
+import { expect, test } from './fixture-workout-crud';
 
 //DICTIONARIES ---
 enum DialogDetails {
