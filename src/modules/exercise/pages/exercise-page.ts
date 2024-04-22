@@ -15,7 +15,7 @@ export class ExercisePage {
   }
 
   //ACTIONS ---
-  async goToExercisePage(): Promise<void> {
+  async goto(): Promise<void> {
     await this.page.goto('http://localhost:4200/exercises');
   }
 
