@@ -2,13 +2,12 @@ import { test as base } from '@playwright/test';
 import { WorkoutPage } from '../../modules/workout/pages/workout-page';
 import { WorkoutCardHandler } from '../../modules/workout/components/workout-card';
 import { WorkoutForm } from '../../modules/workout/components/workout-form';
-import { ToastHandler } from '../../modules/shared/components/toast';
+import { ToastHandler } from '../../modules/shared/components/toast-dialog';
 
 type WorkoutPageFixture = {
   workoutPage: WorkoutPage;
   workoutCardHandler: WorkoutCardHandler;
   workoutForm: WorkoutForm;
-  // workoutFormUpdate: WorkoutForm;
   toastHandler: ToastHandler;
 }
 
