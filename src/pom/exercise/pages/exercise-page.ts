@@ -2,10 +2,10 @@ import { expect, type Locator, type Page } from "@playwright/test";
 
 export class ExercisePage {
   //ARRANGEMENTS ---
-  private readonly searchBox: Locator
-  private readonly openCreateFormButton: Locator
-  private readonly filterTabs: Locator
-  private readonly cardList: Locator
+  readonly searchBox: Locator
+  readonly openCreateFormButton: Locator
+  readonly filterTabs: Locator
+  readonly cardList: Locator
 
   constructor( private readonly page: Page ) {
     this.searchBox = this.page.getByRole('searchbox'),

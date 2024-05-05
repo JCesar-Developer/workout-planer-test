@@ -1,21 +1,23 @@
 import { test as base } from '@playwright/test';
-import { WorkoutPage } from '../../modules/workout/pages/workout-page';
-import { WorkoutCardHandler } from '../../modules/workout/components/workout-card';
-import { WorkoutForm } from '../../modules/workout/components/workout-form';
-import { ToastHandler } from '../../modules/shared/components/toast-dialog';
+import { WorkoutPage } from '../../pom/workout/pages/workout-page';
+import { WorkoutCardHandler } from '../../pom/workout/components/workout-card';
+import { WorkoutForm } from '../../pom/workout/components/workout-form';
+import { ToastDialogHandler } from '../../pom/shared/components/toast-dialog';
+import { ConfirmDialog } from '../../pom/shared/components/confirm-dialog';
 
 type WorkoutPageFixture = {
   workoutPage: WorkoutPage;
   workoutCardHandler: WorkoutCardHandler;
   workoutForm: WorkoutForm;
-  toastHandler: ToastHandler;
+  toastHandler: ToastDialogHandler;
+  confirmDialog: ConfirmDialog;
 }
 
 export const test = base.extend<WorkoutPageFixture>({
   workoutPage: async ({ page }, use) => {
     const workoutPage = new WorkoutPage(page);
     await workoutPage.goto();
-    await use(workoutPage);
+    await use(workoutPage);   
   },
   workoutForm: async ({ page, workoutPage }, use) => {
     const workoutForm = new WorkoutForm(page);
@@ -26,8 +28,12 @@ export const test = base.extend<WorkoutPageFixture>({
     await use(workoutCardHandler);
   },
   toastHandler: async ({ page }, use) => {
-    const toastHandler = new ToastHandler(page);
+    const toastHandler = new ToastDialogHandler(page);
     await use(toastHandler);
+  },
+  confirmDialog: async ({ page }, use) => {
+    const confirmDialog = new ConfirmDialog(page);
+    await use(confirmDialog);
   }
 })
 

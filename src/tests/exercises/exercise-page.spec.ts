@@ -1,4 +1,5 @@
-import { test } from './fixture-exercise-page';
+// import { test } from './fixture-exercise-page';
+import { test } from '../../fixtures/exercise-page.fixture'
 
 //DICTIONARIES ---
 enum PageDetails {
@@ -8,7 +9,8 @@ enum PageDetails {
 
 //TESTS ---
 //Read
-test('Page should has "Lista de Ejercicios" title', async ({ pageTemplate }) => {
+test('Page should has a title', async ({ exercisePage, pageTemplate }) => {
+  await exercisePage.goto();
   await pageTemplate.hasTitle(PageDetails.Title);
 });
 
@@ -16,7 +18,8 @@ test('Page should has a list of exercises', async ({ exercisePage }) => {
   await exercisePage.hasCardList();
 });
 
-test('Page should has a list of exercises with at least one exercise', async ({ exerciseCardHandler }) => {
+test('Page should has a list of exercises with at least one exercise', async ({ exercisePage, exerciseCardHandler }) => {
+  await exercisePage.goto();
   await exerciseCardHandler.hasExerciseCards();
 });
 

@@ -10,6 +10,9 @@ export class WorkoutForm {
   private readonly durationInput: Locator;
   private readonly durationErrorMessage: Locator;
   private readonly submitButton: Locator;
+  private readonly setsInputs: Locator;
+  private readonly repsInputs: Locator;
+  private readonly restsInputs: Locator;
 
   //TODO: Provisional
   private readonly exerciseCardsToSelect: Locator;
@@ -22,6 +25,9 @@ export class WorkoutForm {
     this.durationInput = page.getByRole('textbox', { name: 'Duración *' });
     this.durationErrorMessage = page.getByTestId('duration-error-message');
     this.submitButton = page.locator('button[type="submit"]');
+    this.setsInputs = page.getByRole('textbox', { name: 'Series' });
+    this.repsInputs = page.getByRole('textbox', { name: 'Reps' });
+    this.restsInputs = page.getByRole('textbox', { name: 'Desc' });
 
     //TODO: Provisional
     this.exerciseCardsToSelect = page.getByRole('dialog').locator('exercise-card');
@@ -46,6 +52,24 @@ export class WorkoutForm {
 
   async saveWorkout() {
     await this.submitButton.click();
+  }
+
+  async fillAllSetsInputs( value: number ) {
+    for( const input of await this.setsInputs.all() ) {
+      await input.fill(value.toString());
+    }
+  }
+
+  async fillAllRepsInputs( value: number ) {
+    for( const input of await this.repsInputs.all() ) {
+      await input.fill(value.toString());
+    }
+  }
+
+  async fillAllRestsInputs( value: number ) {
+    for( const input of await this.restsInputs.all() ) {
+      await input.fill(value.toString());
+    }
   }
 
   //ASSERTIONS ---

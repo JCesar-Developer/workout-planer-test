@@ -1,15 +1,17 @@
-import { test as base, expect } from '@playwright/test';
+import { test as base } from '@playwright/test';
 
-import { ExercisePage } from '../../modules/exercise/pages/exercise-page';
-import { ExerciseForm } from '../../modules/exercise/components/exercise-form';
-import { ExerciseCardHandler } from '../../modules/shared/components/exercise-card';
-import { ToastHandler } from '../../modules/shared/components/toast-dialog';
+import { ExercisePage } from '../../pom/exercise/pages/exercise-page';
+import { ExerciseForm } from '../../pom/exercise/components/exercise-form';
+import { ExerciseCardHandler } from '../../pom/shared/components/exercise-card';
+import { ToastDialogHandler } from '../../pom/shared/components/toast-dialog';
+import { ConfirmDialog } from '../../pom/shared/components/confirm-dialog';
 
 type ExerciseCrudFixtures = {
   exercisePage: ExercisePage;
   exerciseForm: ExerciseForm;
   exerciseCardHandler: ExerciseCardHandler;
-  toastHandler: ToastHandler;
+  toastHandler: ToastDialogHandler;
+  confirmDialog: ConfirmDialog;
 }
 
 export const test = base.extend<ExerciseCrudFixtures>({
@@ -27,8 +29,12 @@ export const test = base.extend<ExerciseCrudFixtures>({
     await use(exerciseCardHandler);
   },
   toastHandler: async ({ page }, use) => {
-    const toastHandler = new ToastHandler(page);
+    const toastHandler = new ToastDialogHandler(page);
     await use(toastHandler);
+  },
+  confirmDialog: async ({ page }, use) => {
+    const confirmDialog = new ConfirmDialog(page);
+    await use(confirmDialog);
   }
 })
 

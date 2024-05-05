@@ -1,7 +1,7 @@
 import { test as base } from '@playwright/test';
-import { ExercisePage } from '../../modules/exercise/pages/exercise-page';
-import { ExerciseCardHandler } from '../../modules/shared/components/exercise-card';
-import { PageTemplate } from '../../modules/shared/pages/template-page';
+import { ExercisePage } from '../../pom/exercise/pages/exercise-page';
+import { ExerciseCardHandler } from '../../pom/shared/components/exercise-card';
+import { PageTemplate } from '../../pom/shared/pages/template-page';
 
 type ExercisePageFixture = {
   pageTemplate: PageTemplate;
