@@ -1,19 +1,27 @@
-import { type Page, type Locator, expect } from "@playwright/test";
+import { test as base, expect } from "@playwright/test";
+import type { Page, Locator } from "@playwright/test";
 
-export class WorkoutCardHandler {
-  //ARRANGEMENTS ----
+export const test = base.extend<{ workoutCard: WorkoutCard }>({
+  workoutCard: async ({ page }, use) => {
+    const workoutCard = new WorkoutCard(page);
+    await use(workoutCard);
+  }
+});
+
+export class WorkoutCard {
+  //Arrangements ----
   private readonly workoutCards: Locator;
 
   constructor( private readonly page: Page ) {
     this.workoutCards = page.getByTestId('workout-card');
   }
 
-  //GETTERS ---
+  //Getters ---
   public getWorkoutCardByName(name: string) {
     return this.workoutCards.filter({ hasText: name });
   }
 
-  //ACTIONS ---
+  //Actions ---
   async openUpdateWorkoutDialog(name: string) {
     const workoutCard = this.getWorkoutCardByName(name);
     await workoutCard.getByTestId('open-workout-form-btn').click();
@@ -24,7 +32,7 @@ export class WorkoutCardHandler {
     await workoutCard.getByTestId('delete-workout-btn').click();
   }
 
-  //ASSERTIONS ---
+  //Assertions ---
   async workoutCardExists(name: string) {
     const workoutCard = this.getWorkoutCardByName(name);
     await expect(workoutCard).toBeVisible();

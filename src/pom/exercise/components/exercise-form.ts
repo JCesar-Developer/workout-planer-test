@@ -1,15 +1,24 @@
-import { expect, type Locator, type Page } from "@playwright/test";
+import { expect, test as base } from '@playwright/test';
+import type { Locator, Page } from "@playwright/test";
 
+//FIXTURE ---
+export const test = base.extend<{exerciseForm: ExerciseForm}>({
+  exerciseForm: async ({ page }, use) => {
+    const exerciseForm = new ExerciseForm(page);
+    await use(exerciseForm);
+  }
+});
+
+//POM ---
 export class ExerciseForm {
-
-  //ARRANGEMENTS ---
-  private readonly closeBtn: Locator;
-  private readonly deleteBtn: Locator;
-  private readonly dialog: Locator;
-  private readonly dialogTitle: Locator;
-  private readonly errorMessage: Locator;
-  private readonly exerciseNameInput: Locator;
-  private readonly saveBtn: Locator;
+  //Arrangements ---
+  readonly closeBtn: Locator;
+  readonly deleteBtn: Locator;
+  readonly dialog: Locator;
+  readonly dialogTitle: Locator;
+  readonly errorMessage: Locator;
+  readonly exerciseNameInput: Locator;
+  readonly saveBtn: Locator;
 
   constructor( private readonly page: Page ) {
     this.closeBtn = this.page.getByTestId('close-button'),
@@ -21,8 +30,7 @@ export class ExerciseForm {
     this.saveBtn = this.page.locator('button[type="submit"]')
   }
 
-  //TODO: Faltan los casos de uso: Cambiar categoria del ejercicio y cambiar imagen del ejercicio.
-  //ACTIONS ---
+  //Actions ---
   async fillExerciseName( text: string ): Promise<void> {
     await this.exerciseNameInput.click();
     await this.exerciseNameInput.fill(text);
@@ -40,7 +48,7 @@ export class ExerciseForm {
     await this.deleteBtn.click();
   }
 
-  //ASSERTIONS ---
+  //Assertions ---
   async dialogExists(): Promise<void> {
     await expect(this.dialog).toBeVisible();
   }

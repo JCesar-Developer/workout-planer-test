@@ -1,8 +1,15 @@
-import { expect, type Locator, type Page } from "@playwright/test";
+import { test as base, expect } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
+
+export const test = base.extend<{ workoutForm: WorkoutForm }>({
+  workoutForm: async ({ page }, use) => {
+    const workoutForm = new WorkoutForm(page);
+    await use(workoutForm);
+  }
+});
 
 export class WorkoutForm {
-
-  //ARRANGEMENTS ----
+  //Arrengements ----
   private readonly dialog: Locator;
   private readonly dialogTitle: Locator;
   private readonly nameInput: Locator;
@@ -33,7 +40,7 @@ export class WorkoutForm {
     this.exerciseCardsToSelect = page.getByRole('dialog').locator('exercise-card');
   }
 
-  //ACTIONS ---
+  //Actions ---
   async fillNameInput( text: string ) {
     await this.nameInput.click();
     await this.nameInput.fill(text);
@@ -72,7 +79,7 @@ export class WorkoutForm {
     }
   }
 
-  //ASSERTIONS ---
+  //Assertions ---
   //TODO: Se puede sacar en su propia clase
   async dialogExists() {
     await expect(this.dialog).toBeVisible();

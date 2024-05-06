@@ -1,8 +1,17 @@
-import { expect, type Locator, type Page } from "@playwright/test"
+import { test as base, expect } from '@playwright/test';
+import type { Locator, Page } from "@playwright/test"
 
+//FIXTURE ---
+export const test = base.extend<{ confirmDialog: ConfirmDialog }>({
+  confirmDialog: async ({ page }, use) => {
+    const confirmDialog = new ConfirmDialog(page);
+    await use(confirmDialog);
+  }
+});
+
+//POM ---
 export class ConfirmDialog {
-
-  //ARRANGEMENTS ---
+  //Arrangements ---
   private readonly content: Locator;
   private readonly buttonNo: Locator;
   private readonly buttonYes: Locator;
@@ -13,7 +22,7 @@ export class ConfirmDialog {
     this.buttonYes = this.page.getByRole('button', { name: 'Yes' });
   }
 
-  //ACTIONS ---
+  //Actions ---
   async clickNo(): Promise<void> {
     await this.buttonNo.click();
   }
@@ -23,7 +32,7 @@ export class ConfirmDialog {
   }
 
   //ASSERTIONS ---
-  async showsContent(content: string): Promise<void> {
+  async ExpectShowsContent(content: string): Promise<void> {
     await expect(this.content).toHaveText(content);
   }
   
