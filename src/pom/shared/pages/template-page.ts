@@ -12,14 +12,14 @@ export const test = base.extend<{ pageTemplate: PageTemplate }>({
 //POM ---
 export class PageTemplate {
   //Arrangement
-  readonly pageTitle: Locator
+  private readonly pageTitle: Locator
 
   constructor( private readonly page: Page ) {
     this.pageTitle = this.page.getByTestId('page-header')
   }
 
   //Assertions 
-  async expectTitleToBe(expectedTitle: string): Promise<void> {
+  public async expectTitleToBe(expectedTitle: string): Promise<void> {
     const pageTitle = await this.pageTitle.textContent();
     expect(pageTitle).toBe(expectedTitle);
   }

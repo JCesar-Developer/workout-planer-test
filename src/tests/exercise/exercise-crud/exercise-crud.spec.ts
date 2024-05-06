@@ -16,7 +16,7 @@ test('Complete exercise CRUD flux', async ({ exercisePage, exerciseForm, exercis
   await toastDialog.ExpectShowsToastState(toastMessage.status.success);
   await toastDialog.ExpectShowsToastSummary(toastMessage.message.successCreated);
 
-  await exerciseCard.cardExists(ExerciseCardDetails.NewCardName);
+  await exerciseCard.expectCardExists(ExerciseCardDetails.NewCardName);
 
   //update ---
   await exerciseCard.openUpdateExerciseDialog(ExerciseCardDetails.NewCardName);
@@ -31,7 +31,7 @@ test('Complete exercise CRUD flux', async ({ exercisePage, exerciseForm, exercis
   await toastDialog.ExpectShowsToastState(toastMessage.status.success);
   await toastDialog.ExpectShowsToastSummary(toastMessage.message.successUpdated);
 
-  await exerciseCard.cardExists(ExerciseCardDetails.UpdatedCardName);
+  await exerciseCard.expectCardExists(ExerciseCardDetails.UpdatedCardName);
 
   //delete ---
   await exerciseCard.openUpdateExerciseDialog(ExerciseCardDetails.UpdatedCardName);

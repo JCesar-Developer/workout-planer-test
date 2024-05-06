@@ -1,4 +1,4 @@
-import { test as base } from '@playwright/test';
+import { test as base, expect } from '@playwright/test';
 import type { Locator, Page } from "@playwright/test";
 
 export const test = base.extend<{exercisePage: ExercisePage}>({
@@ -13,7 +13,7 @@ export class ExercisePage {
   //Arrangements ---
   readonly openDialogButton: Locator
   readonly filterTabs: Locator
-  readonly cardList: Locator
+  private readonly cardList: Locator
 
   constructor( private readonly page: Page ) {
     this.openDialogButton = this.page.getByTestId('open-create-form-btn'),
@@ -22,16 +22,21 @@ export class ExercisePage {
   }
 
   //Actions ---
-  async goto(): Promise<void> {
+  public async goto(): Promise<void> {
     await this.page.goto('http://localhost:4200/exercises');
   }
 
-  async selectFilterTab( filter: string ): Promise<void> {
+  public async selectFilterTab( filter: string ): Promise<void> {
     await this.filterTabs.locator(`text="${filter}"`).click();
   }
 
-  async openDialog(): Promise<void> {
+  public async openDialog(): Promise<void> {
     await this.openDialogButton.click();
+  }
+
+  //Assertions ---
+  public async expectHasCardList(): Promise<void> {
+    await expect(this.cardList).toBeVisible();
   }
 
 }

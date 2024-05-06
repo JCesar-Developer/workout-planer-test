@@ -33,7 +33,22 @@ export class ExerciseCard {
   }
 
   //Assertions ---
-  public async cardExists( name: string ): Promise<void> {
+  public async expectThereAreNoCards(): Promise<void> {
+    const totalCards = await this.cards.count();
+    expect(totalCards).toBe(0);
+  }
+
+  public async expectThereIsOneCard(): Promise<void> {
+    const totalCards = await this.cards.count();
+    expect(totalCards).toBe(1);
+  }
+
+  public async expectThereAreCards(): Promise<void> {
+    const totalCards = await this.cards.count();
+    expect(totalCards).toBeGreaterThan(1);
+  }
+  
+  public async expectCardExists( name: string ): Promise<void> {
     await expect(this.getCardsByQuery(name)).toBeVisible();
   }
 }
