@@ -4,7 +4,7 @@ import { DialogDetails, toastMessage, WorkoutCardDetails } from './workout-crud.
 //TESTS ---
 test('Complete workout CRUD flux', async ({ workoutPage, workoutForm, workoutCard, toastDialog, confirmDialog }) => {
   //create ---
-  await workoutPage.openCreateWorkoutDialog();
+  await workoutPage.openFormDialog();
   await workoutForm.dialogExists();
 
   await workoutForm.hasTitle(DialogDetails.CreateTitle);
@@ -22,7 +22,7 @@ test('Complete workout CRUD flux', async ({ workoutPage, workoutForm, workoutCar
   await toastDialog.ExpectShowsToastState(toastMessage.status.success);
   await toastDialog.ExpectShowsToastSummary(toastMessage.message.successCreated);
 
-  await workoutCard.workoutCardExists(WorkoutCardDetails.NewCardName);
+  await workoutCard.expectCardExists(WorkoutCardDetails.NewCardName);
 
   //update ---
   await workoutCard.openUpdateWorkoutDialog(WorkoutCardDetails.NewCardName);
@@ -36,7 +36,7 @@ test('Complete workout CRUD flux', async ({ workoutPage, workoutForm, workoutCar
   await toastDialog.ExpectShowsToastState(toastMessage.status.success);
   await toastDialog.ExpectShowsToastSummary(toastMessage.message.successUpdated);
 
-  await workoutCard.workoutCardExists(WorkoutCardDetails.UpdatedCardName);
+  await workoutCard.expectCardExists(WorkoutCardDetails.UpdatedCardName);
 
   //delete ---
   await workoutCard.deleteWorkout(WorkoutCardDetails.UpdatedCardName);

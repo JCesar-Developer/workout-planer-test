@@ -12,25 +12,23 @@ export const test = base.extend<{ searchBar: SearchBar }>({
 //POM ---
 export class SearchBar {
   //Arrangements ---
-  readonly searchBox: Locator
+  private readonly searchBox: Locator
 
   constructor( private readonly page: Page ) {
     this.searchBox = this.page.getByRole('searchbox');
   }
 
   //Actions ---
-  async fillSearchBox( text: string ): Promise<void> {
+  public async fillSearchBox( text: string ): Promise<void> {
     await this.searchBox.click();
     await this.searchBox.fill(text);
   }
 
-  async quitSearchBox(): Promise<void> {
+  public async quitSearchBox(): Promise<void> {
     await this.searchBox.press('Escape');
   }
 
-  async selectOption( option: string ): Promise<void> {
+  public async selectOption( option: string ): Promise<void> {
     await this.page.getByRole('option', { name: option }).click();
   }
-
-
 }

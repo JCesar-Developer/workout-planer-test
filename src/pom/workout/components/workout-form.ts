@@ -41,39 +41,39 @@ export class WorkoutForm {
   }
 
   //Actions ---
-  async fillNameInput( text: string ) {
+  public async fillNameInput( text: string ) {
     await this.nameInput.click();
     await this.nameInput.fill(text);
   }
 
-  async fillDurationInput( number: number ) {
+  public async fillDurationInput( number: number ) {
     await this.durationInput.click();
     await this.durationInput.fill(number.toString());
   } 
 
   //TODO: Provisional
-  async selectExerciseCard(id: number) {
+  public async selectExerciseCard(id: number) {
     const exerciseCards = await this.exerciseCardsToSelect.all()
     await exerciseCards[id].click();
   }
 
-  async saveWorkout() {
+  public async saveWorkout() {
     await this.submitButton.click();
   }
 
-  async fillAllSetsInputs( value: number ) {
+  public async fillAllSetsInputs( value: number ) {
     for( const input of await this.setsInputs.all() ) {
       await input.fill(value.toString());
     }
   }
 
-  async fillAllRepsInputs( value: number ) {
+  public async fillAllRepsInputs( value: number ) {
     for( const input of await this.repsInputs.all() ) {
       await input.fill(value.toString());
     }
   }
 
-  async fillAllRestsInputs( value: number ) {
+  public async fillAllRestsInputs( value: number ) {
     for( const input of await this.restsInputs.all() ) {
       await input.fill(value.toString());
     }
@@ -81,21 +81,20 @@ export class WorkoutForm {
 
   //Assertions ---
   //TODO: Se puede sacar en su propia clase
-  async dialogExists() {
+  public async dialogExists() {
     await expect(this.dialog).toBeVisible();
   }
 
   //TODO: Se puede sacar en su propia clase
-  async hasTitle(title: string) {
+  public async hasTitle(title: string) {
     await expect(this.dialogTitle).toHaveText(title);
   }
 
-  async hasNameError(errorMessage: string) {
+  public async hasNameError(errorMessage: string) {
     await expect(this.nameErrorMessage).toHaveText(errorMessage);
   }
 
-  async hasDurationError(errorMessage: string) {
+  public async hasDurationError(errorMessage: string) {
     await expect(this.durationErrorMessage).toHaveText(errorMessage);
   }
-
 }

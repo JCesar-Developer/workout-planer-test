@@ -14,24 +14,24 @@ export const test = base.extend<{ workoutPage: WorkoutPage }>({
 export class WorkoutPage {
   //Arrangements ----
   private readonly workoutList: Locator;
-  private readonly openCreateWorkoutButton: Locator;
+  private readonly btnOpenDialog: Locator;
 
   constructor( private readonly page: Page ) {
     this.workoutList = page.getByTestId('workout-list');
-    this.openCreateWorkoutButton = page.getByRole('button', { name: 'Nuevo Workout' });
+    this.btnOpenDialog = page.getByRole('button', { name: 'Nuevo Workout' });
   }
 
   //Actions ---
-  async goto() {
+  public async goto() {
     await this.page.goto('http://localhost:4200/workouts');
   }
 
-  async openCreateWorkoutDialog() {
-    await this.openCreateWorkoutButton.click();
+  public async openFormDialog() {
+    await this.btnOpenDialog.click();
   }
 
   //Assertion ---
-  async hasWorkoutCardList() {
+  public async expectHasCardList() {
     await this.workoutList.isVisible();
   }
   

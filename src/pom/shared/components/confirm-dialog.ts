@@ -23,16 +23,16 @@ export class ConfirmDialog {
   }
 
   //Actions ---
-  async clickNo(): Promise<void> {
+  public async clickNo(): Promise<void> {
     await this.buttonNo.click();
   }
 
-  async clickYes(): Promise<void> {
+  public async clickYes(): Promise<void> {
     await this.buttonYes.click();
   }
 
   //ASSERTIONS ---
-  async ExpectShowsContent(content: string): Promise<void> {
+  public async ExpectShowsContent(content: string): Promise<void> {
     await expect(this.content).toHaveText(content);
   }
   

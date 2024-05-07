@@ -12,8 +12,8 @@ export const test = base.extend<{ toastDialog: ToastDialog }>({
 //POM ---
 export class ToastDialog {
   //Arrangements ---
-  readonly toastSummary: Promise<Locator[]>
-  readonly toastDetail: Promise<Locator[]>
+  private readonly toastSummary: Promise<Locator[]>
+  private readonly toastDetail: Promise<Locator[]>
 
   constructor( private readonly page: Page ) {
     this.toastSummary = this.page.locator('div.p-toast-summary').all(),
@@ -21,7 +21,7 @@ export class ToastDialog {
   }
 
   //Assertions ---
-  async ExpectShowsToastState(toastState: string): Promise<void> {
+  public async ExpectShowsToastState(toastState: string): Promise<void> {
     this.toastSummary.then(async (toasts) => {
       for (const toast of toasts) {
         await expect(toast).toHaveText(toastState)
@@ -29,7 +29,7 @@ export class ToastDialog {
     });
   }
 
-  async ExpectShowsToastSummary(toastMessage: string): Promise<void> {
+  public async ExpectShowsToastSummary(toastMessage: string): Promise<void> {
     this.toastDetail.then(async (toasts) => {
       for (const toast of toasts) {
         await expect(toast).toHaveText(toastMessage)

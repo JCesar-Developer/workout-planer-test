@@ -12,13 +12,17 @@ export const test = base.extend<{ exerciseCard: ExerciseCard }>({
 //POM --- 
 export class ExerciseCard {
   //Arrangements ---
-  readonly cards: Locator
+  private readonly cards: Locator
 
   constructor( private readonly page: Page ) {
     this.cards = this.page.getByTestId('card-item')
   }
 
   //Getters ---
+  public getCards(): Locator {
+    return this.cards;
+  }
+
   public getCardsByQuery( name: string ): Locator {
     return this.cards.filter({ hasText: name });
   }
@@ -28,7 +32,7 @@ export class ExerciseCard {
   }
 
   //Actions ---
-  public async openUpdateExerciseDialog( name: string ): Promise<void> {
+  public async openEditDialog( name: string ): Promise<void> {
     await this.getCardsByQuery(name).getByRole('button').click();
   }
 

@@ -11,8 +11,8 @@ export const test = base.extend<{exercisePage: ExercisePage}>({
 
 export class ExercisePage {
   //Arrangements ---
-  readonly openDialogButton: Locator
-  readonly filterTabs: Locator
+  private readonly openDialogButton: Locator
+  private readonly filterTabs: Locator
   private readonly cardList: Locator
 
   constructor( private readonly page: Page ) {

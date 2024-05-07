@@ -9,16 +9,13 @@ enum PageDetails {
 //TESTS ---
 //Read
 test('Page should has a title', async ({ exercisePage, pageTemplate }) => {
-  await test.step('Given a \'http://localhost:4200/exercises\' url', async () => {
-    await exercisePage.goto();
-  });
+  await test.step('Given a \'http://localhost:4200/exercises\' url', async () => exercisePage );
   await test.step('Then page should has "Lista de Ejercicios" as title', async () => {
     await pageTemplate.expectTitleToBe(PageDetails.Title);
   });
 });
 
 test('Page should has a list of exercises', async ({ exercisePage }) => {
-  await test.step('Given a \'http://localhost:4200/exercises\' url', async () => {});
   await test.step('Then should has a list of exercises', async () => {
     await exercisePage.expectHasCardList();
   });
@@ -33,12 +30,12 @@ test('Page should has a list of exercises with at least one exercise', async ({ 
   });
 });
 
-//Search by name
-test('Should find 0 cards after put an invalid text in the search input', async ({ exercisePage, exerciseCard, searchBar }) => {
+//Search by term
+test('Should find 0 cards after put an invalid text in the searchbar', async ({ exercisePage, exerciseCard, searchBar }) => {
   await test.step('Given a \'http://localhost:4200/exercises\' url', async () => {
     await exercisePage.goto();
   });
-  await test.step('When put an invalid text in the search input', async () => {
+  await test.step('When put an invalid text in the searchbar', async () => {
     await searchBar.fillSearchBox(PageDetails.InvalidText);
     await searchBar.quitSearchBox();
   });
@@ -48,11 +45,11 @@ test('Should find 0 cards after put an invalid text in the search input', async 
   })
 });
 
-test('Should find more than 1 cards after put a valid text in the search input', async ({ exercisePage, exerciseCard, searchBar }) => {
+test('Should find more than 1 cards after put a valid text in the searchbar', async ({ exercisePage, exerciseCard, searchBar }) => {
   await test.step('Given a \'http://localhost:4200/exercises\' url', async () => {
     await exercisePage.goto();
   });
-  await test.step('When put a valid text in the search input', async () => {
+  await test.step('When put a valid text in the searchbar', async () => {
     await searchBar.fillSearchBox('Exerc');
     await searchBar.quitSearchBox();
   })
@@ -62,7 +59,7 @@ test('Should find more than 1 cards after put a valid text in the search input',
   });
 });
 
-test('Should find one card after select an option in the search input', async ({ exercisePage, exerciseCard, searchBar }) => {
+test('Should find one card after select an option from the searchbar', async ({ exercisePage, exerciseCard, searchBar }) => {
   await test.step('Given a \'http://localhost:4200/exercises\' url', async () => {
     await exercisePage.goto();
   });
@@ -97,7 +94,7 @@ test('Exercise cards filtered by category should have the correct category', asy
   });
   await test.step('Then all cards should have the category "Core"', async () => {
     await new Promise(resolve => setTimeout(resolve, 500));
-    (await exerciseCard.cards.all()).forEach(async card => {
+    (await exerciseCard.getCards().all()).forEach(async card => {
       const category = await card.getByTestId('exercise-category').innerText()
       expect(category).toBe('Core');
     })

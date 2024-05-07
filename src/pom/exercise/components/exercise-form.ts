@@ -12,13 +12,13 @@ export const test = base.extend<{exerciseForm: ExerciseForm}>({
 //POM ---
 export class ExerciseForm {
   //Arrangements ---
-  readonly closeBtn: Locator;
-  readonly deleteBtn: Locator;
-  readonly dialog: Locator;
-  readonly dialogTitle: Locator;
-  readonly errorMessage: Locator;
-  readonly exerciseNameInput: Locator;
-  readonly saveBtn: Locator;
+  private readonly closeBtn: Locator;
+  private readonly deleteBtn: Locator;
+  private readonly dialog: Locator;
+  private readonly dialogTitle: Locator;
+  private readonly errorMessage: Locator;
+  private readonly exerciseNameInput: Locator;
+  private readonly saveBtn: Locator;
 
   constructor( private readonly page: Page ) {
     this.closeBtn = this.page.getByTestId('close-button'),
@@ -31,34 +31,33 @@ export class ExerciseForm {
   }
 
   //Actions ---
-  async fillExerciseName( text: string ): Promise<void> {
+  public async fillExerciseName( text: string ): Promise<void> {
     await this.exerciseNameInput.click();
     await this.exerciseNameInput.fill(text);
   }
 
-  async closeDialog(): Promise<void> {
+  public async closeDialog(): Promise<void> {
     await this.closeBtn.click();
   }
 
-  async saveExercise(): Promise<void> {
+  public async saveExercise(): Promise<void> {
     await this.saveBtn.click();
   }
 
-  async deleteExercise(): Promise<void> {
+  public async deleteExercise(): Promise<void> {
     await this.deleteBtn.click();
   }
 
   //Assertions ---
-  async dialogExists(): Promise<void> {
+  public async expectDialogExists(): Promise<void> {
     await expect(this.dialog).toBeVisible();
   }
 
-  async hasTitle(title: string): Promise<void> {
+  public async expectHasTitle(title: string): Promise<void> {
     await expect(this.dialogTitle).toHaveText(title);
   }
 
-  async hasError(errorMessage: string): Promise<void> {
+  public async expectHasError(errorMessage: string): Promise<void> {
     await expect(this.errorMessage).toHaveText(errorMessage);
   }
-
 }

@@ -1,49 +1,80 @@
 import { test, expect } from './exercise-crud.fixture';
 import { DialogDetails, ExerciseCardDetails, toastMessage } from './exercise-crud.details';
 
+test.describe.configure({ mode: 'serial' });
+
 //TESTS ---
-test('Complete exercise CRUD flux', async ({ exercisePage, exerciseForm, exerciseCard, toastDialog, confirmDialog }) => {
-  //create ---
-  await exercisePage.openDialog();
-  await exerciseForm.dialogExists();
+test('Create new exercise', async ({ exercisePage, exerciseForm, exerciseCard, toastDialog }) => {
+  await test.step('Given a user who opens the dialog to create a new exercise', async () => {
+    await exercisePage.openDialog();
+    await exerciseForm.expectHasTitle(DialogDetails.CreateTitle);
+  });
 
-  await exerciseForm.hasTitle(DialogDetails.CreateTitle);
+  await test.step('When the user fills the exercise name input', async () => {
+    await exerciseForm.fillExerciseName(ExerciseCardDetails.NewCardName);
+  });
 
-  await exerciseForm.fillExerciseName(ExerciseCardDetails.NewCardName);
-  await exerciseForm.saveExercise();
-  await new Promise(resolve => setTimeout(resolve, 500));
+  await test.step('When the user saves the new exercise', async () => {
+    await exerciseForm.saveExercise();
+  });
+
+  await test.step('Then the exercise card is created', async () => {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    await exerciseCard.expectCardExists(ExerciseCardDetails.NewCardName);
+  });
+
+  await test.step('Then success toast message is displayed', async () => {
+    await toastDialog.ExpectShowsToastState(toastMessage.status.success);
+    await toastDialog.ExpectShowsToastSummary(toastMessage.message.successCreated);
+  });
+})
+
+test('Update exercise', async ({ exercisePage, exerciseCard, exerciseForm, toastDialog }) => {
+  await test.step('Given a user who opens the dialog to update an exercise', async () => {
+    exercisePage;
+    await exerciseCard.openEditDialog(ExerciseCardDetails.NewCardName);
+    await exerciseForm.expectHasTitle(DialogDetails.UpdateTitle);
+  });
+
+  await test.step('When the user updates the exercise name input', async () => {
+    await exerciseForm.fillExerciseName(ExerciseCardDetails.UpdatedCardName);
+  });
+
+  await test.step('When the user saves the updated exercise', async () => {
+    await exerciseForm.saveExercise();
+  });
+
+  await test.step('Then the exercise card is updated', async () => {
+    await new Promise(resolve => setTimeout(resolve, 500));
+    await exerciseCard.expectCardExists(ExerciseCardDetails.UpdatedCardName);
+  });
+
+  await test.step('Then success toast message is displayed', async () => {
+    await toastDialog.ExpectShowsToastState(toastMessage.status.success);
+    await toastDialog.ExpectShowsToastSummary(toastMessage.message.successUpdated);
+  });
+});
+
+test('Delete exercise', async ({ exercisePage, exerciseCard, exerciseForm, confirmDialog, toastDialog }) => {
+  await test.step('Given a user who opens the dialog to delete an exercise', async () => {
+    exercisePage;
+    await exerciseCard.openEditDialog(ExerciseCardDetails.UpdatedCardName);
+    await exerciseForm.deleteExercise();
+    await confirmDialog.ExpectShowsContent(DialogDetails.confirmDelete);
+  });
   
-  await toastDialog.ExpectShowsToastState(toastMessage.status.success);
-  await toastDialog.ExpectShowsToastSummary(toastMessage.message.successCreated);
+  await test.step('When the user confirms the delete action', async () => {
+    await confirmDialog.clickYes();
+  });
+  
+  await test.step('Then the exercise card is deleted', async () => {
+    await new Promise(resolve => setTimeout(resolve, 500));
+    await expect(exerciseCard.getCardsByQuery(ExerciseCardDetails.NewCardName)).not.toBeVisible();
+    await expect(exerciseCard.getCardsByQuery(ExerciseCardDetails.UpdatedCardName)).not.toBeVisible();
+  });
 
-  await exerciseCard.expectCardExists(ExerciseCardDetails.NewCardName);
-
-  //update ---
-  await exerciseCard.openUpdateExerciseDialog(ExerciseCardDetails.NewCardName);
-  await exerciseForm.dialogExists();
-
-  await exerciseForm.hasTitle(DialogDetails.UpdateTitle);
-
-  await exerciseForm.fillExerciseName(ExerciseCardDetails.UpdatedCardName);
-  await exerciseForm.saveExercise();
-  await new Promise(resolve => setTimeout(resolve, 500));
-
-  await toastDialog.ExpectShowsToastState(toastMessage.status.success);
-  await toastDialog.ExpectShowsToastSummary(toastMessage.message.successUpdated);
-
-  await exerciseCard.expectCardExists(ExerciseCardDetails.UpdatedCardName);
-
-  //delete ---
-  await exerciseCard.openUpdateExerciseDialog(ExerciseCardDetails.UpdatedCardName);
-  await exerciseForm.deleteExercise();
-  await confirmDialog.ExpectShowsContent(DialogDetails.confirmDelete);
-
-  await confirmDialog.clickYes();
-  await new Promise(resolve => setTimeout(resolve, 500));
-
-  await toastDialog.ExpectShowsToastState(toastMessage.status.success);
-  await toastDialog.ExpectShowsToastSummary(toastMessage.message.successDeleted);
-
-  await expect(exerciseCard.getCardsByQuery(ExerciseCardDetails.NewCardName)).not.toBeVisible();
-  await expect(exerciseCard.getCardsByQuery(ExerciseCardDetails.UpdatedCardName)).not.toBeVisible();
+  await test.step('Then success toast message is displayed', async () => {
+    await toastDialog.ExpectShowsToastState(toastMessage.status.success);
+    await toastDialog.ExpectShowsToastSummary(toastMessage.message.successDeleted);
+  });
 });

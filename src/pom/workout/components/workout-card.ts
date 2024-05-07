@@ -22,24 +22,34 @@ export class WorkoutCard {
   }
 
   //Actions ---
-  async openUpdateWorkoutDialog(name: string) {
+  public async openUpdateWorkoutDialog(name: string) {
     const workoutCard = this.getWorkoutCardByName(name);
     await workoutCard.getByTestId('open-workout-form-btn').click();
   }
 
-  async deleteWorkout(name: string) {
+  public async deleteWorkout(name: string) {
     const workoutCard = this.getWorkoutCardByName(name);
     await workoutCard.getByTestId('delete-workout-btn').click();
   }
 
   //Assertions ---
-  async workoutCardExists(name: string) {
-    const workoutCard = this.getWorkoutCardByName(name);
-    await expect(workoutCard).toBeVisible();
+  public async expectThereAreNoCards() {
+    const totalWorkoutCards = await this.workoutCards.count();
+    expect(totalWorkoutCards).toBe(0);
   }
 
-  async hasWorkoutCards() {
+  public async expectThereIsOneCard() {
+    const totalWorkoutCards = await this.workoutCards.count();
+    expect(totalWorkoutCards).toBe(1);
+  }
+  
+  public async expectThereAreCards() {
     const totalWorkoutCards = await this.workoutCards.count();
     expect(totalWorkoutCards).toBeGreaterThan(1);
+  }
+
+  public async expectCardExists(name: string) {
+    const workoutCard = this.getWorkoutCardByName(name);
+    await expect(workoutCard).toBeVisible();
   }
 }
