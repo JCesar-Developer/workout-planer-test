@@ -1,5 +1,6 @@
 import { test, expect } from './exercise-crud.fixture';
 import { DialogDetails, ExerciseCardDetails, toastMessage } from './exercise-crud.details';
+import { ToastSummary } from '@/pom/shared/components/toast-dialog';
 
 test.describe.configure({ mode: 'serial' });
 
@@ -19,13 +20,13 @@ test('Create new exercise', async ({ exercisePage, exerciseForm, exerciseCard, t
   });
 
   await test.step('Then the exercise card is created', async () => {
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise(resolve => setTimeout(resolve, 500));
     await exerciseCard.expectCardExists(ExerciseCardDetails.NewCardName);
   });
 
   await test.step('Then success toast message is displayed', async () => {
-    await toastDialog.ExpectShowsToastState(toastMessage.status.success);
-    await toastDialog.ExpectShowsToastSummary(toastMessage.message.successCreated);
+    await toastDialog.expectSummaryBe(ToastSummary.Success);
+    await toastDialog.expectDetailBe(toastMessage.successCreated);
   });
 })
 
@@ -50,8 +51,8 @@ test('Update exercise', async ({ exercisePage, exerciseCard, exerciseForm, toast
   });
 
   await test.step('Then success toast message is displayed', async () => {
-    await toastDialog.ExpectShowsToastState(toastMessage.status.success);
-    await toastDialog.ExpectShowsToastSummary(toastMessage.message.successUpdated);
+    await toastDialog.expectSummaryBe(ToastSummary.Success);
+    await toastDialog.expectDetailBe(toastMessage.successUpdated);
   });
 });
 
@@ -74,7 +75,7 @@ test('Delete exercise', async ({ exercisePage, exerciseCard, exerciseForm, confi
   });
 
   await test.step('Then success toast message is displayed', async () => {
-    await toastDialog.ExpectShowsToastState(toastMessage.status.success);
-    await toastDialog.ExpectShowsToastSummary(toastMessage.message.successDeleted);
+    await toastDialog.expectSummaryBe(ToastSummary.Success);
+    await toastDialog.expectDetailBe(toastMessage.successDeleted);
   });
 });

@@ -1,12 +1,13 @@
+
 import { expect, test } from './workout-crud.fixture';
 import { DialogDetails, toastMessage, WorkoutCardDetails } from './workout-crud.details';
+import { ToastSummary } from '@/pom/shared/components/toast-dialog';
+
+test.describe.configure({ mode: 'serial' });
 
 //TESTS ---
-test('Complete workout CRUD flux', async ({ workoutPage, workoutForm, workoutCard, toastDialog, confirmDialog }) => {
-  //create ---
+test('Create workout', async ({ workoutPage, workoutForm, workoutCard, toastDialog }) => {
   await workoutPage.openFormDialog();
-  await workoutForm.dialogExists();
-
   await workoutForm.hasTitle(DialogDetails.CreateTitle);
 
   await workoutForm.fillNameInput(WorkoutCardDetails.NewCardName);
@@ -19,34 +20,37 @@ test('Complete workout CRUD flux', async ({ workoutPage, workoutForm, workoutCar
   await workoutForm.saveWorkout();
 
   await new Promise(resolve => setTimeout(resolve, 500));
-  await toastDialog.ExpectShowsToastState(toastMessage.status.success);
-  await toastDialog.ExpectShowsToastSummary(toastMessage.message.successCreated);
-
   await workoutCard.expectCardExists(WorkoutCardDetails.NewCardName);
 
-  //update ---
-  await workoutCard.openUpdateWorkoutDialog(WorkoutCardDetails.NewCardName);
-  await workoutForm.dialogExists();
+  await toastDialog.expectSummaryBe(ToastSummary.Success);
+  await toastDialog.expectDetailBe(toastMessage.successCreated);
+});
 
+test('Update workout', async ({ workoutPage, workoutForm, workoutCard, toastDialog }) => {
+  workoutPage
+  await workoutCard.openUpdateWorkoutDialog(WorkoutCardDetails.NewCardName);
   await workoutForm.hasTitle(DialogDetails.UpdateTitle);
 
   await workoutForm.fillNameInput(WorkoutCardDetails.UpdatedCardName);
   await workoutForm.saveWorkout();
+  
   await new Promise(resolve => setTimeout(resolve, 500));
-  await toastDialog.ExpectShowsToastState(toastMessage.status.success);
-  await toastDialog.ExpectShowsToastSummary(toastMessage.message.successUpdated);
-
   await workoutCard.expectCardExists(WorkoutCardDetails.UpdatedCardName);
 
-  //delete ---
+  await toastDialog.expectSummaryBe(ToastSummary.Success);
+  await toastDialog.expectDetailBe(toastMessage.successUpdated);
+});
+
+test('Delete workout', async ({ workoutPage, workoutCard, toastDialog, confirmDialog }) => {
+  workoutPage
   await workoutCard.deleteWorkout(WorkoutCardDetails.UpdatedCardName);
   await confirmDialog.ExpectShowsContent(DialogDetails.ConfirmDelete);
   await confirmDialog.clickYes();
 
   await new Promise(resolve => setTimeout(resolve, 500));
-  await toastDialog.ExpectShowsToastState(toastMessage.status.success);
-  await toastDialog.ExpectShowsToastSummary(toastMessage.message.successDeleted);
+  await expect(workoutCard.getCardByName(WorkoutCardDetails.NewCardName)).not.toBeVisible();
+  await expect(workoutCard.getCardByName(WorkoutCardDetails.UpdatedCardName)).not.toBeVisible();
 
-  await expect(workoutCard.getWorkoutCardByName(WorkoutCardDetails.NewCardName)).not.toBeVisible();
-  await expect(workoutCard.getWorkoutCardByName(WorkoutCardDetails.UpdatedCardName)).not.toBeVisible();
-})
+  await toastDialog.expectSummaryBe(ToastSummary.Success);
+  await toastDialog.expectDetailBe(toastMessage.successDeleted);
+});

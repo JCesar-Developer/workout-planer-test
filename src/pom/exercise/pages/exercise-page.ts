@@ -36,7 +36,7 @@ export class ExercisePage {
 
   //Assertions ---
   public async expectHasCardList(): Promise<void> {
-    await expect(this.cardList).toBeVisible();
+    await expect(this.cardList, 'Card list item was not displayed').toBeVisible();
   }
 
 }

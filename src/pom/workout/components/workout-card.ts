@@ -17,18 +17,18 @@ export class WorkoutCard {
   }
 
   //Getters ---
-  public getWorkoutCardByName(name: string) {
+  public getCardByName(name: string) {
     return this.workoutCards.filter({ hasText: name });
   }
 
   //Actions ---
   public async openUpdateWorkoutDialog(name: string) {
-    const workoutCard = this.getWorkoutCardByName(name);
+    const workoutCard = this.getCardByName(name);
     await workoutCard.getByTestId('open-workout-form-btn').click();
   }
 
   public async deleteWorkout(name: string) {
-    const workoutCard = this.getWorkoutCardByName(name);
+    const workoutCard = this.getCardByName(name);
     await workoutCard.getByTestId('delete-workout-btn').click();
   }
 
@@ -49,7 +49,7 @@ export class WorkoutCard {
   }
 
   public async expectCardExists(name: string) {
-    const workoutCard = this.getWorkoutCardByName(name);
+    const workoutCard = this.getCardByName(name);
     await expect(workoutCard).toBeVisible();
   }
 }

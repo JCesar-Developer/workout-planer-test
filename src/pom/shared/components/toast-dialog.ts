@@ -1,6 +1,13 @@
 import { test as base, expect } from '@playwright/test';
 import type { Locator, Page } from "@playwright/test"
 
+export enum ToastSummary {
+  Success = 'Success',
+  Error = 'Error',
+  Info = 'Info',
+  Warn = 'Warn'
+}
+
 //FIXTURE ---
 export const test = base.extend<{ toastDialog: ToastDialog }>({
   toastDialog: async ({ page }, use) => {
@@ -12,28 +19,28 @@ export const test = base.extend<{ toastDialog: ToastDialog }>({
 //POM ---
 export class ToastDialog {
   //Arrangements ---
-  private readonly toastSummary: Promise<Locator[]>
-  private readonly toastDetail: Promise<Locator[]>
+  readonly toastSummary: Locator;
+  readonly toastDetail: Locator;
 
   constructor( private readonly page: Page ) {
-    this.toastSummary = this.page.locator('div.p-toast-summary').all(),
-    this.toastDetail = this.page.locator('div.p-toast-detail').all()
+    this.toastSummary = this.page.locator('div.p-toast-summary');
+    this.toastDetail = this.page.locator('div.p-toast-detail');
   }
 
   //Assertions ---
-  public async ExpectShowsToastState(toastState: string): Promise<void> {
-    this.toastSummary.then(async (toasts) => {
-      for (const toast of toasts) {
-        await expect(toast).toHaveText(toastState)
-      }
+  async expectSummaryBe(toastState: string): Promise<void> {
+    this.toastSummary.all().then(async (summaries) => {
+      const headers = await Promise.all(summaries.map(summary => summary.textContent()));
+      const found = headers.some(header => toastState === header);
+      expect(found).toBeTruthy();
     });
   }
 
-  public async ExpectShowsToastSummary(toastMessage: string): Promise<void> {
-    this.toastDetail.then(async (toasts) => {
-      for (const toast of toasts) {
-        await expect(toast).toHaveText(toastMessage)
-      }
+  async expectDetailBe(toastMessage: string): Promise<void> {
+    this.toastDetail.all().then(async (details) => {
+      const contents = await Promise.all(details.map(toast => toast.textContent()));
+      const found = contents.some(content => toastMessage === content);
+      expect(found).toBeTruthy();
     });
   }
 

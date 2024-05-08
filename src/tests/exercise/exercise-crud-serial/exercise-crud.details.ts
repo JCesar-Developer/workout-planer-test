@@ -10,13 +10,7 @@ export enum ExerciseCardDetails {
 }
 
 export const toastMessage = {
-  status: {
-    success: 'Success',
-    error: 'Error',
-  },
-  message: {
-    successCreated: 'Ejercicio "Test exercise" creado con éxito',
-    successUpdated: 'Ejercicio "Test exercise updated" actualizado con éxito',
-    successDeleted: 'Ejercicio "Test exercise updated" eliminado con éxito',
-  }
+  successCreated: 'Ejercicio "Test exercise" creado con éxito',
+  successUpdated: 'Ejercicio "Test exercise updated" actualizado con éxito',
+  successDeleted: 'Ejercicio "Test exercise updated" eliminado con éxito',
 }
