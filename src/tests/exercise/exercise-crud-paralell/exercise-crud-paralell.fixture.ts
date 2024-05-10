@@ -47,19 +47,19 @@ base.beforeAll(async ({ browser }) => {
 });
 
 export const test = base.extend<ExerciseCrudFixture>({
-  exercisePage: async (_, use) => {
+  exercisePage: async ({}, use) => {
     await use(new ExercisePage(page));
   },
-  exerciseForm: async (_, use) => {
+  exerciseForm: async ({}, use) => {
     await use(new ExerciseForm(page));
   },
-  exerciseCard: async (_, use) => {
+  exerciseCard: async ({}, use) => {
     await use(new ExerciseCard(page));
   },
-  toastDialog: async (_, use) => {
+  toastDialog: async ({}, use) => {
     await use(new ToastDialog(page));
   },
-  confirmDialog: async (_, use) => {
+  confirmDialog: async ({}, use) => {
     await use(new ConfirmDialog(page));
   }
 });
