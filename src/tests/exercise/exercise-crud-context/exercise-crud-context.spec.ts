@@ -1,6 +1,6 @@
-import { test, expect } from './exercise-crud.fixture';
-import { DialogDetails, ExerciseCardDetails, toastMessage } from './exercise-crud.details';
-import { ToastSummary } from '@/pom/shared/components/toast-dialog';
+import { test, expect } from './exercise-crud-context.fixture';
+import { ToastSummary } from '@/pom/shared/components/toast-dialog.pom';
+import { DialogDetails, ExerciseCardDetails, toastMessage } from './exercise-crud-context.constants';
 
 test.describe.configure({ mode: 'serial' });
 

@@ -1,10 +1,10 @@
 import { type Page, test as base } from '@playwright/test';
-import { WorkoutPage } from '@workout/pages/workout-page';
-import { WorkoutCard } from '@workout/components/workout-card';
-import { WorkoutForm } from '@workout/components/workout-form';
-import { ToastDialog } from '@shared/components/toast-dialog';
-import { ConfirmDialog } from '@shared/components/confirm-dialog';
-import { WorkoutCardDetails } from './workout-crud.details';
+import { WorkoutPage } from '@workout/pages/workout-page.pom';
+import { WorkoutCard } from '@workout/components/workout-card.pom';
+import { WorkoutForm } from '@workout/components/workout-form.pom';
+import { ToastDialog } from '@shared/components/toast-dialog.pom';
+import { ConfirmDialog } from '@shared/components/confirm-dialog.pom';
+import { WorkoutCardDetails } from './workout-crud-serial.constants';
 
 interface WorkoutCrudFixture {
   workoutPage: WorkoutPage;

@@ -29,7 +29,7 @@ export class ToastDialog {
 
   //Assertions ---
   async expectSummaryBe(toastState: string): Promise<void> {
-    this.toastSummary.all().then(async (summaries) => {
+    await this.toastSummary.all().then(async (summaries) => {
       const headers = await Promise.all(summaries.map(summary => summary.textContent()));
       const found = headers.some(header => toastState === header);
       expect(found).toBeTruthy();
@@ -37,7 +37,7 @@ export class ToastDialog {
   }
 
   async expectDetailBe(toastMessage: string): Promise<void> {
-    this.toastDetail.all().then(async (details) => {
+    await this.toastDetail.all().then(async (details) => {
       const contents = await Promise.all(details.map(toast => toast.textContent()));
       const found = contents.some(content => toastMessage === content);
       expect(found).toBeTruthy();

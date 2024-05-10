@@ -1,5 +1,5 @@
 import { test as base, expect } from '@playwright/test';
-import type { Locator, Page } from "@playwright/test";
+import type { Browser, Locator, Page } from "@playwright/test";
 
 export const test = base.extend<{exercisePage: ExercisePage}>({
   exercisePage: async ({ page }, use) => {
@@ -11,14 +11,14 @@ export const test = base.extend<{exercisePage: ExercisePage}>({
 
 export class ExercisePage {
   //Arrangements ---
-  private readonly openDialogButton: Locator
-  private readonly filterTabs: Locator
-  private readonly cardList: Locator
+  private readonly openDialogButton: Locator;
+  private readonly filterTabs: Locator;
+  private readonly cardList: Locator;
 
-  constructor( private readonly page: Page ) {
-    this.openDialogButton = this.page.getByTestId('open-create-form-btn'),
-    this.filterTabs = this.page.getByTestId('filter-tab'),
-    this.cardList = this.page.getByTestId('card-list')
+  constructor( private page: Page ) {
+    this.openDialogButton = this.page.getByTestId('open-create-form-btn');
+    this.filterTabs = this.page.getByTestId('filter-tab');
+    this.cardList = this.page.getByTestId('card-list');
   }
 
   //Actions ---

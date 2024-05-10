@@ -1,10 +1,10 @@
 import { type Page, test as base } from '@playwright/test';
-import { ExercisePage } from '@exercise/pages/exercise-page';
-import { ExerciseForm } from '@exercise/components/exercise-form';
-import { ExerciseCard } from '@exercise/components/exercise-card';
-import { ToastDialog } from '@shared/components/toast-dialog';
-import { ConfirmDialog } from '@shared/components/confirm-dialog';
-import { ExerciseCardDetails } from './exercise-crud.details';
+import { ExercisePage } from '@exercise/pages/exercise-page.pom';
+import { ExerciseForm } from '@exercise/components/exercise-form.pom';
+import { ExerciseCard } from '@exercise/components/exercise-card.pom';
+import { ToastDialog } from '@shared/components/toast-dialog.pom';
+import { ConfirmDialog } from '@shared/components/confirm-dialog.pom';
+import { ExerciseCardDetails } from './exercise-crud-serial.constants';
 
 interface ExerciseCrudFixture {
   exercisePage: ExercisePage;
@@ -24,20 +24,8 @@ base.beforeAll(async ({ browser }) => {
 });
 
 base.afterAll(async () => {
-  const exerciseCard = new ExerciseCard(page);
-  const exerciseForm = new ExerciseForm(page);
-  const confirmDialog = new ConfirmDialog(page);
-
-  if(await exerciseCard.getCardsByQuery(ExerciseCardDetails.NewCardName).isVisible()) {
-    await exerciseCard.openEditDialog(ExerciseCardDetails.NewCardName);
-    await exerciseForm.deleteExercise();
-    await confirmDialog.clickYes();
-  }
-  if(await exerciseCard.getCardsByQuery(ExerciseCardDetails.UpdatedCardName).isVisible()) {
-    await exerciseCard.openEditDialog(ExerciseCardDetails.UpdatedCardName);
-    await exerciseForm.deleteExercise();
-    await confirmDialog.clickYes();
-  }
+  await deleteCard(ExerciseCardDetails.NewCardName);
+  await deleteCard(ExerciseCardDetails.UpdatedCardName);
 });
 
 export const test = base.extend<ExerciseCrudFixture>({
@@ -59,5 +47,16 @@ export const test = base.extend<ExerciseCrudFixture>({
   }
 });
 
+const deleteCard = async (cardName: string): Promise<void> => {
+  const exerciseCard = new ExerciseCard(page);
+  const exerciseForm = new ExerciseForm(page);
+  const confirmDialog = new ConfirmDialog(page);
+  
+  if(await exerciseCard.getCardsByQuery(cardName).isVisible()) {
+    await exerciseCard.openEditDialog(cardName);
+    await exerciseForm.deleteExercise();
+    await confirmDialog.clickYes();
+  }
+};
 
 export { expect } from '@playwright/test';

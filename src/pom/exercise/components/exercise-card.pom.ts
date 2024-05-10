@@ -23,6 +23,11 @@ export class ExerciseCard {
     return this.cards;
   }
 
+  public getCardByExactName( name: string ): Locator {
+    const title = this.page.getByRole('heading', { name, exact: true });
+    return this.cards.filter({ has: title });
+  }
+
   public getCardsByQuery( name: string ): Locator {
     return this.cards.filter({ hasText: name });
   }
@@ -33,7 +38,8 @@ export class ExerciseCard {
 
   //Actions ---
   public async openEditDialog( name: string ): Promise<void> {
-    await this.getCardsByQuery(name).getByRole('button').click();
+    const card = this.getCardByExactName(name);
+    await card.locator('button').click();
   }
 
   //Assertions ---
@@ -53,6 +59,12 @@ export class ExerciseCard {
   }
   
   public async expectCardExists( name: string ): Promise<void> {
-    await expect(this.getCardsByQuery(name)).toBeVisible();
+    const card = this.getCardByExactName(name);
+    await expect(card).toBeVisible();
+  }
+
+  public async expectCardDoesNotExist( name: string ): Promise<void> {
+    const card = this.getCardByExactName(name);
+    await expect(card).not.toBeVisible();
   }
 }
