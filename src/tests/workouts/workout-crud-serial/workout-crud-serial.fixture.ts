@@ -38,20 +38,19 @@ base.afterAll(async () => {
 });
 
 export const test = base.extend<WorkoutCrudFixture>({
-  workoutPage: async ({}, use) => {
-    const workoutPage = new WorkoutPage(page);
-    await use(workoutPage);
+  workoutPage: async (_, use) => {
+    await use(new WorkoutPage(page));
   },
-  workoutCard: async ({}, use) => {
+  workoutCard: async (_, use) => {
     await use(new WorkoutCard(page));
   },
-  workoutForm: async ({}, use) => {
+  workoutForm: async (_, use) => {
     await use(new WorkoutForm(page));
   },
-  toastDialog: async ({}, use) => {
+  toastDialog: async (_, use) => {
     await use(new ToastDialog(page));
   },
-  confirmDialog: async ({}, use) => {
+  confirmDialog: async (_, use) => {
     await use(new ConfirmDialog(page));
   }
 });

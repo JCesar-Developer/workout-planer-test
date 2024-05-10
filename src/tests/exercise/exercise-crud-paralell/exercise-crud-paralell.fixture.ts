@@ -6,7 +6,7 @@ import { ToastDialog } from '@shared/components/toast-dialog.pom';
 import { ConfirmDialog } from '@shared/components/confirm-dialog.pom';
 
 import { exerciseToUpdateMock, exerciseToDeleteMock } from './exercise-crud-paralell.mocks';
-import { Exercise } from '../../../pom/exercise/interfaces/exercise.interface';
+import { Exercise } from '@exercise/interfaces/exercise.interface';
 
 interface ExerciseCrudFixture {
   exercisePage: ExercisePage;
@@ -47,19 +47,19 @@ base.beforeAll(async ({ browser }) => {
 });
 
 export const test = base.extend<ExerciseCrudFixture>({
-  exercisePage: async ({}, use) => {
+  exercisePage: async (_, use) => {
     await use(new ExercisePage(page));
   },
-  exerciseForm: async ({}, use) => {
+  exerciseForm: async (_, use) => {
     await use(new ExerciseForm(page));
   },
-  exerciseCard: async ({}, use) => {
+  exerciseCard: async (_, use) => {
     await use(new ExerciseCard(page));
   },
-  toastDialog: async ({}, use) => {
+  toastDialog: async (_, use) => {
     await use(new ToastDialog(page));
   },
-  confirmDialog: async ({}, use) => {
+  confirmDialog: async (_, use) => {
     await use(new ConfirmDialog(page));
   }
 });
