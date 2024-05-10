@@ -5,7 +5,7 @@ import { DialogDetails, ExerciseCardDetails, toastMessage } from './exercise-cru
 test.describe.configure({ mode: 'serial' });
 
 //TESTS ---
-test('Create new exercise', async ({ exercisePage, exerciseForm, exerciseCard, toastDialog }) => {
+test('Create new exercise', { tag: '@slow'} , async ({ exercisePage, exerciseForm, exerciseCard, toastDialog }) => {
   await test.step('Given a user who opens the dialog to create a new exercise', async () => {
     await exercisePage.openDialog();
     await exerciseForm.expectHasTitle(DialogDetails.CreateTitle);
@@ -30,7 +30,7 @@ test('Create new exercise', async ({ exercisePage, exerciseForm, exerciseCard, t
   });
 })
 
-test('Update exercise', async ({ exercisePage, exerciseCard, exerciseForm, toastDialog }) => {
+test('Update exercise', { tag: '@slow'} , async ({ exercisePage, exerciseCard, exerciseForm, toastDialog }) => {
   await test.step('Given a user who opens the dialog to update an exercise', async () => {
     exercisePage;
     await exerciseCard.openEditDialog(ExerciseCardDetails.NewCardName);
@@ -56,7 +56,7 @@ test('Update exercise', async ({ exercisePage, exerciseCard, exerciseForm, toast
   });
 });
 
-test('Delete exercise', async ({ exercisePage, exerciseCard, exerciseForm, confirmDialog, toastDialog }) => {
+test('Delete exercise', { tag: '@slow'} , async ({ exercisePage, exerciseCard, exerciseForm, confirmDialog, toastDialog }) => {
   await test.step('Given a user who opens the dialog to delete an exercise', async () => {
     exercisePage;
     await exerciseCard.openEditDialog(ExerciseCardDetails.UpdatedCardName);

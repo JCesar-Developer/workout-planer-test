@@ -3,7 +3,7 @@ import { ToastSummary } from '@/pom/shared/components/toast-dialog.pom';
 import { DialogDetails, ExerciseCardDetails, toastMessage } from './exercise-crud-paralell.constants';
 
 //TESTS ---
-test('Create new exercise', async ({ exercisePage, exerciseForm, exerciseCard, toastDialog, confirmDialog }) => {
+test('Create new exercise', { tag: '@fast'} , async ({ exercisePage, exerciseForm, exerciseCard, toastDialog, confirmDialog }) => {
   await test.step('Given a user who opens the dialog to create a new exercise', async () => {
     await exercisePage.openDialog();
     await exerciseForm.expectHasTitle(DialogDetails.CreateTitle);
@@ -35,7 +35,7 @@ test('Create new exercise', async ({ exercisePage, exerciseForm, exerciseCard, t
   });
 })
 
-test('Update exercise', async ({ exercisePage, exerciseCard, exerciseForm, toastDialog }) => {
+test('Update exercise', { tag: '@fast'} , async ({ exercisePage, exerciseCard, exerciseForm, toastDialog }) => {
   await test.step('Given a user who opens the dialog to update an exercise', async () => {
     exercisePage;
     await exerciseCard.openEditDialog(ExerciseCardDetails.CardToUpdateName);
@@ -61,7 +61,7 @@ test('Update exercise', async ({ exercisePage, exerciseCard, exerciseForm, toast
   });
 });
 
-test('Delete exercise', async ({ exercisePage, exerciseCard, exerciseForm, confirmDialog, toastDialog }) => {
+test('Delete exercise', { tag: '@fast'} , async ({ exercisePage, exerciseCard, exerciseForm, confirmDialog, toastDialog }) => {
   await test.step('Given a user who opens the dialog to delete an exercise', async () => {
     exercisePage;
     await exerciseCard.openEditDialog(ExerciseCardDetails.CardToDeleteName);

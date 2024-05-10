@@ -6,7 +6,7 @@ import { DialogDetails, toastMessage, WorkoutCardDetails } from './workout-crud-
 test.describe.configure({ mode: 'serial' });
 
 //TESTS ---
-test('Create workout', async ({ workoutPage, workoutForm, workoutCard, toastDialog }) => {
+test('Create workout', { tag: '@slow'} , async ({ workoutPage, workoutForm, workoutCard, toastDialog }) => {
   await workoutPage.openFormDialog();
   await workoutForm.hasTitle(DialogDetails.CreateTitle);
 
@@ -26,7 +26,7 @@ test('Create workout', async ({ workoutPage, workoutForm, workoutCard, toastDial
   await toastDialog.expectDetailBe(toastMessage.successCreated);
 });
 
-test('Update workout', async ({ workoutPage, workoutForm, workoutCard, toastDialog }) => {
+test('Update workout', { tag: '@slow'} , async ({ workoutPage, workoutForm, workoutCard, toastDialog }) => {
   workoutPage
   await workoutCard.openUpdateWorkoutDialog(WorkoutCardDetails.NewCardName);
   await workoutForm.hasTitle(DialogDetails.UpdateTitle);
@@ -41,7 +41,7 @@ test('Update workout', async ({ workoutPage, workoutForm, workoutCard, toastDial
   await toastDialog.expectDetailBe(toastMessage.successUpdated);
 });
 
-test('Delete workout', async ({ workoutPage, workoutCard, toastDialog, confirmDialog }) => {
+test('Delete workout', { tag: '@slow'} , async ({ workoutPage, workoutCard, toastDialog, confirmDialog }) => {
   workoutPage
   await workoutCard.deleteWorkout(WorkoutCardDetails.UpdatedCardName);
   await confirmDialog.ExpectShowsContent(DialogDetails.ConfirmDelete);

@@ -8,14 +8,14 @@ enum PageDetails {
 
 //TESTS ---
 //Read
-test('Page should has a title', async ({ exercisePage, pageTemplate }) => {
+test('Page should has a title', { tag: '@fast'} , async ({ exercisePage, pageTemplate }) => {
   await test.step('Given a \'http://localhost:4200/exercises\' url', async () => exercisePage );
   await test.step('Then page should has "Lista de Ejercicios" as title', async () => {
     await pageTemplate.expectTitleToBe(PageDetails.Title);
   });
 });
 
-test('Page should has a list of exercises', async ({ exercisePage }) => {
+test('Page should has a list of exercises', { tag: '@fast'} , async ({ exercisePage }) => {
   await test.step('Then should has a list of exercises', async () => {
     await exercisePage.expectHasCardList();
   });
@@ -31,7 +31,7 @@ test('Page should has a list of exercises with at least one exercise', async ({ 
 });
 
 //Search by term
-test('Should find 0 cards after put an invalid text in the searchbar', async ({ exercisePage, exerciseCard, searchBar }) => {
+test('Should find 0 cards after put an invalid text in the searchbar', { tag: '@fast'} , async ({ exercisePage, exerciseCard, searchBar }) => {
   await test.step('Given a \'http://localhost:4200/exercises\' url', async () => {
     await exercisePage.goto();
   });
@@ -45,7 +45,7 @@ test('Should find 0 cards after put an invalid text in the searchbar', async ({ 
   })
 });
 
-test('Should find more than 1 cards after put a valid text in the searchbar', async ({ exercisePage, exerciseCard, searchBar }) => {
+test('Should find more than 1 cards after put a valid text in the searchbar', { tag: '@fast'} , async ({ exercisePage, exerciseCard, searchBar }) => {
   await test.step('Given a \'http://localhost:4200/exercises\' url', async () => {
     await exercisePage.goto();
   });
@@ -59,7 +59,7 @@ test('Should find more than 1 cards after put a valid text in the searchbar', as
   });
 });
 
-test('Should find one card after select an option from the searchbar', async ({ exercisePage, exerciseCard, searchBar }) => {
+test('Should find one card after select an option from the searchbar', { tag: '@fast'} , async ({ exercisePage, exerciseCard, searchBar }) => {
   await test.step('Given a \'http://localhost:4200/exercises\' url', async () => {
     await exercisePage.goto();
   });
@@ -76,7 +76,7 @@ test('Should find one card after select an option from the searchbar', async ({ 
 });
 
 //Search by category
-test('Page should find more than 1 cards after use a chip filter', async ({ exercisePage, exerciseCard }) => {
+test('Page should find more than 1 cards after use a chip filter', { tag: '@fast'} , async ({ exercisePage, exerciseCard }) => {
   await test.step('Given a \'http://localhost:4200/exercises\' url', async () => {});
   await test.step('When select a chip filter', async () => {
     await exercisePage.selectFilterTab('Core');
@@ -87,7 +87,7 @@ test('Page should find more than 1 cards after use a chip filter', async ({ exer
   });
 });
 
-test('Exercise cards filtered by category should have the correct category', async ({ exercisePage, page, exerciseCard }) => {
+test('Exercise cards filtered by category should have the correct category', { tag: '@fast'} , async ({ exercisePage, page, exerciseCard }) => {
   await test.step('Given a \'http://localhost:4200/exercises\' url', async () => {});
   await test.step('When select a chip filter', async () => {
     await exercisePage.selectFilterTab('Core');
