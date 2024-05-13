@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint . --ext .ts",
     "test": "npm run lint && npx playwright test",
+    "fast-tests": "npm run lint && npx playwright test --grep @fast",
+    "slow-tests": "npm run lint && npx playwright test --grep @slow",
     "ui-mode": "npx playwright test --ui",
     "trace": "npx playwright test --trace on",
-    "fast-tests": "npx playwright test --grep @fast",
-    "slow-tests": "npx playwright test --grep @slow",
-    "lint": "eslint . --ext .ts",
     "ts-watcher": "npx tsc -p tsconfig.json --noEmit -w",
     "report": "npx playwright show-report"
   },
