@@ -7,10 +7,8 @@
     "test": "npx playwright test",
     "ui-mode": "npx playwright test --ui", 
     "trace": "npx playwright test --trace on",
-    
     "fast-tests": "npx playwright test --grep @fast",
     "slow-tests": "npx playwright test --grep @slow",
-    
     "ts-watcher": "npx tsc -p tsconfig.json --noEmit -w",
     "report": "npx playwright show-report"
   },
