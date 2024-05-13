@@ -6,7 +6,7 @@ import { ToastDialog } from '@shared/components/toast-dialog.pom';
 import { ConfirmDialog } from '@shared/components/confirm-dialog.pom';
 
 import { exerciseToUpdateMock, exerciseToDeleteMock } from './exercise-crud-paralell.mocks';
-import { Exercise } from '../../../pom/exercise/interfaces/exercise.interface';
+import { Exercise } from '@exercise/interfaces/exercise.interface';
 
 interface ExerciseCrudFixture {
   exercisePage: ExercisePage;

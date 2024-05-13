@@ -39,8 +39,7 @@ base.afterAll(async () => {
 
 export const test = base.extend<WorkoutCrudFixture>({
   workoutPage: async ({}, use) => {
-    const workoutPage = new WorkoutPage(page);
-    await use(workoutPage);
+    await use(new WorkoutPage(page));
   },
   workoutCard: async ({}, use) => {
     await use(new WorkoutCard(page));

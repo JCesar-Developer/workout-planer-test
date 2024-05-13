@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test",
-    "ui-mode": "npx playwright test --ui", 
+    "test": "npm run lint && npx playwright test",
+    "ui-mode": "npx playwright test --ui",
     "trace": "npx playwright test --trace on",
     "fast-tests": "npx playwright test --grep @fast",
     "slow-tests": "npx playwright test --grep @slow",
+    "lint": "eslint . --ext .ts",
     "ts-watcher": "npx tsc -p tsconfig.json --noEmit -w",
     "report": "npx playwright show-report"
   },
@@ -18,6 +19,9 @@
   "devDependencies": {
     "@playwright/test": "^1.43.0",
     "@types/node": "^20.12.5",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "eslint": "^8.57.0",
     "typescript": "^5.4.5"
   }
 }

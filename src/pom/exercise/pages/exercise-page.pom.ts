@@ -1,5 +1,5 @@
 import { test as base, expect } from '@playwright/test';
-import type { Browser, Locator, Page } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 
 export const test = base.extend<{exercisePage: ExercisePage}>({
   exercisePage: async ({ page }, use) => {
