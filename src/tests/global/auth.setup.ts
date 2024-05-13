@@ -9,12 +9,9 @@ setup('authenticate', async ({ page }) => {
   await loginPom.goto();
   await loginPom.fillUsername('julioasto.92@gmail.com');
   await loginPom.fillPassword('123456');
-  await loginPom.clickLoginButton();
+  await loginPom.clickOnLoginButton();
 
-  // Wait for the final URL to ensure that the cookies are actually set.
-  // await page.waitForURL('localhost:4200/');
-  // Alternatively, you can wait until the page reaches a state where all cookies are set.
+  // await page.waitForURL('http://localhost:4200/statistics');
   await expect(page.getByRole('heading', { name: 'John Doe' })).toBeVisible();
-
   await page.context().storageState({ path: authFile });
 });
