@@ -1,5 +1,6 @@
-import { test as base } from '@playwright/test';
+import { test as base, expect } from '@playwright/test';
 import type { Locator, Page } from '@playwright/test';
+import { Given, When, Then } from '@decorators';
 
 //FIXTURE ---
 export const test = base.extend<{ workoutPage: WorkoutPage }>({
@@ -22,17 +23,20 @@ export class WorkoutPage {
   }
 
   //Actions ---
+  @Given('I am on the workouts page')
   public async goto() {
     await this.page.goto('http://localhost:4200/workouts');
   }
 
+  @When('I open the form dialog')
   public async openFormDialog() {
     await this.btnOpenDialog.click();
   }
 
   //Assertion ---
+  @Then('expect has card list')
   public async expectHasCardList() {
-    await this.workoutList.isVisible();
+    await expect(this.workoutList).toBeVisible();
   }
   
 }

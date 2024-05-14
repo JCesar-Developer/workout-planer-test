@@ -1,5 +1,6 @@
 import { test as base, expect } from "@playwright/test";
 import type { Page, Locator } from "@playwright/test";
+import { Given, When, Then } from '@decorators';
 
 export const test = base.extend<{ workoutCard: WorkoutCard }>({
   workoutCard: async ({ page }, use) => {
@@ -22,32 +23,38 @@ export class WorkoutCard {
   }
 
   //Actions ---
+  @Given('I am on the workouts page')
   public async openUpdateWorkoutDialog(name: string) {
     const workoutCard = this.getCardByName(name);
     await workoutCard.getByTestId('open-workout-form-btn').click();
   }
 
+  @When('I delete the workout {{1}}')
   public async deleteWorkout(name: string) {
     const workoutCard = this.getCardByName(name);
     await workoutCard.getByTestId('delete-workout-btn').click();
   }
 
   //Assertions ---
+  @Then('expect there are no cards')
   public async expectThereAreNoCards() {
     const totalWorkoutCards = await this.workoutCards.count();
     expect(totalWorkoutCards).toBe(0);
   }
 
+  @Then('expect there is one card')
   public async expectThereIsOneCard() {
     const totalWorkoutCards = await this.workoutCards.count();
     expect(totalWorkoutCards).toBe(1);
   }
   
+  @Then('expect there are cards')
   public async expectThereAreCards() {
     const totalWorkoutCards = await this.workoutCards.count();
     expect(totalWorkoutCards).toBeGreaterThan(1);
   }
 
+  @Then('expect card {{1}} exists')
   public async expectCardExists(name: string) {
     const workoutCard = this.getCardByName(name);
     await expect(workoutCard).toBeVisible();

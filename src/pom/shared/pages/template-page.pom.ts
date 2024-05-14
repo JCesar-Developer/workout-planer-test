@@ -1,5 +1,6 @@
 import { test as base, expect } from '@playwright/test';
 import type { Locator, Page } from "@playwright/test";
+import { Then } from '@decorators';
 
 //FIXTURE ---
 export const test = base.extend<{ pageTemplate: PageTemplate }>({
@@ -19,8 +20,8 @@ export class PageTemplate {
   }
 
   //Assertions 
+  @Then('expect title to be {{1}}')
   public async expectTitleToBe(expectedTitle: string): Promise<void> {
-    const pageTitle = await this.pageTitle.textContent();
-    expect(pageTitle).toBe(expectedTitle);
+    await expect(this.pageTitle).toHaveText(expectedTitle);
   }
 }

@@ -13,21 +13,26 @@ export const test = base.extend<{ dynamicDialog: DynamicDialog }>({
 export class DynamicDialog {
   //Arrangements ---
   private readonly dialog: Locator;
-  private readonly buttonClose: Locator;
+  private readonly dialogTitle: Locator;
+  private readonly xButton: Locator;
 
   constructor( private readonly page: Page ) {
-    // this.content = this.page.locator('div.p-dialog-content');
     this.dialog = this.page.locator('div.p-dynamic-dialog');
-    this.buttonClose = this.page.locator('button.p-dialog-header-icon');
+    this.dialogTitle = this.page.locator('span.p-dialog-title');
+    this.xButton = this.page.locator('button.p-dialog-header-icon');
   }
 
   //Actions ---
   public async clickClose(): Promise<void> {
-    await this.buttonClose.click();
+    await this.xButton.click();
   }
 
   //ASSERTIONS ---
   public async expectDialogIsVisible(content: string): Promise<void> {
     await expect(this.dialog).toHaveText(content);
+  }
+
+  public async expectHasTitle(title: string): Promise<void> {
+    await expect(this.dialogTitle).toHaveText(title);
   }
 }

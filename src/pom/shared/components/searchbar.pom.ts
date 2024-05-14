@@ -1,5 +1,6 @@
 import { test as base } from '@playwright/test';
 import type { Locator, Page } from "@playwright/test";
+import { When } from '@decorators';
 
 //FIXTURE ---
 export const test = base.extend<{ searchBar: SearchBar }>({
@@ -19,15 +20,18 @@ export class SearchBar {
   }
 
   //Actions ---
+  @When('I fill the search box with {{1}}')
   public async fillSearchBox( text: string ): Promise<void> {
     await this.searchBox.click();
     await this.searchBox.fill(text);
   }
 
+  @When('I quit the search box')
   public async quitSearchBox(): Promise<void> {
     await this.searchBox.press('Escape');
   }
 
+  @When('I select the option {{1}}')
   public async selectOption( option: string ): Promise<void> {
     await this.page.getByRole('option', { name: option }).click();
   }
