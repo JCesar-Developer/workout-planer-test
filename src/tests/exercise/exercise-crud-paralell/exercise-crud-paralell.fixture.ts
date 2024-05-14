@@ -22,6 +22,8 @@ base.beforeAll(async ({ browser }) => {
   const context = await browser.newContext();
   page = await context.newPage();
 
+  console.log('Esto se debe ejecutar una única vez antes de todos los test');
+
   const url = /http:\/\/localhost:3000\/exercises(\/\d+)?/;
   await page.route(url, async (route) => {
     if (route.request().method() === 'POST') {
