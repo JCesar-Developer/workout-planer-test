@@ -18,11 +18,13 @@ interface ExerciseCrudFixture {
 } 
 
 let page: Page;
+let counter: number = 0;
 
 base.beforeAll(async ({ browser }) => {
   const context = await browser.newContext();
   page = await context.newPage();
   console.log('Esto se debe ejecutar una única vez antes de todos los test');
+  counter = counter + 10;
 
   const url = /http:\/\/localhost:3000\/exercises(\/\d+)?/;
   await page.route(url, async (route) => {
@@ -44,8 +46,11 @@ base.beforeAll(async ({ browser }) => {
     } 
   });
 
+  await new Promise(resolve => setTimeout(resolve, 2000)); //! Simulate server delay
   await page.goto('http://localhost:4200/exercises');
   await page.waitForLoadState('networkidle');
+
+  console.log(counter);
 });
 
 export const test = base.extend<ExerciseCrudFixture>({

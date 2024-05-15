@@ -7,6 +7,7 @@ import { ToastDialog } from '@shared/components/toast-dialog.pom';
 import { ConfirmDialog } from '@shared/components/confirm-dialog.pom';
 
 import { ExerciseCardDetails } from './exercise-crud-serial.constants';
+import { deleteCard } from './helpers';
 
 interface ExerciseCrudFixture {
   exercisePage: ExercisePage;
@@ -18,6 +19,8 @@ interface ExerciseCrudFixture {
 
 let page: Page;
 
+//!La necesidad de este contexto es porqué queremos definir un afterAll
+//!para eliminar las cards creadas en caso de que algún test falle y no se eliminen.
 base.beforeAll(async ({ browser }) => {
   const context = await browser.newContext();
   page = await context.newPage();
@@ -27,8 +30,8 @@ base.beforeAll(async ({ browser }) => {
 });
 
 base.afterAll(async () => {
-  await deleteCard(ExerciseCardDetails.NewCardName);
-  await deleteCard(ExerciseCardDetails.UpdatedCardName);
+  await deleteCard(ExerciseCardDetails.NewCardName, page);
+  await deleteCard(ExerciseCardDetails.UpdatedCardName, page);
 });
 
 export const test = base.extend<ExerciseCrudFixture>({
@@ -48,17 +51,5 @@ export const test = base.extend<ExerciseCrudFixture>({
     await use(new ConfirmDialog(page));
   }
 });
-
-const deleteCard = async (cardName: string): Promise<void> => {
-  const exerciseCard = new ExerciseCard(page);
-  const exerciseForm = new ExerciseForm(page);
-  const confirmDialog = new ConfirmDialog(page);
-  
-  if(await exerciseCard.getCardsByQuery(cardName).isVisible()) {
-    await exerciseCard.openEditDialog(cardName);
-    await exerciseForm.deleteExercise();
-    await confirmDialog.clickYes();
-  }
-};
 
 export { expect } from '@playwright/test';
