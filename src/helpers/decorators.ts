@@ -44,7 +44,7 @@ function createTestStep(prefix: string) {
  * @returns The formatted message.
  */
 function getMessage(prefix: string, message: string, args: any[]): string {
-  // Regular expression to match placeholders like {{0}}, {{1}}, etc.
+  // Regular expression to match placeholders like {{1}}, {{2}}, etc.
   const regex = /{{\s*(\d+)\s*}}/g;
   let match;
   // Iterate over matches and replace placeholders with arguments

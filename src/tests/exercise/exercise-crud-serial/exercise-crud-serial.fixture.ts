@@ -1,9 +1,11 @@
 import { type Page, test as base } from '@playwright/test';
+
 import { ExercisePage } from '@exercise/pages/exercise-page.pom';
 import { ExerciseForm } from '@exercise/components/exercise-form.pom';
 import { ExerciseCard } from '@exercise/components/exercise-card.pom';
 import { ToastDialog } from '@shared/components/toast-dialog.pom';
 import { ConfirmDialog } from '@shared/components/confirm-dialog.pom';
+
 import { ExerciseCardDetails } from './exercise-crud-serial.constants';
 
 interface ExerciseCrudFixture {
@@ -19,6 +21,7 @@ let page: Page;
 base.beforeAll(async ({ browser }) => {
   const context = await browser.newContext();
   page = await context.newPage();
+
   await page.goto('http://localhost:4200/exercises');
   await page.waitForLoadState('networkidle');
 });

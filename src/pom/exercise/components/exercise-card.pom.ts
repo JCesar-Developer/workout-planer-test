@@ -2,7 +2,7 @@ import { expect, test as base } from '@playwright/test';
 import type { Locator, Page } from "@playwright/test";
 
 //FIXTURE ---
-export const test = base.extend<{ exerciseCard: ExerciseCard }>({
+export const exerciseCardFixture = base.extend<{ exerciseCard: ExerciseCard }>({
   exerciseCard: async ({ page }, use) => {
     const exerciseCard = new ExerciseCard(page);
     await use(exerciseCard);

@@ -3,7 +3,7 @@ import type { Locator, Page } from "@playwright/test";
 import { When } from '@decorators';
 
 //FIXTURE ---
-export const test = base.extend<{ searchBar: SearchBar }>({
+export const searchBarFixture = base.extend<{ searchBar: SearchBar }>({
   searchBar: async ({ page }, use) => {
     const searchBar = new SearchBar(page);
     await use(searchBar);

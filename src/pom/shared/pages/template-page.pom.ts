@@ -3,7 +3,7 @@ import type { Locator, Page } from "@playwright/test";
 import { Then } from '@decorators';
 
 //FIXTURE ---
-export const test = base.extend<{ pageTemplate: PageTemplate }>({
+export const pageTemplateFixture = base.extend<{ pageTemplate: PageTemplate }>({
   pageTemplate: async ({ page }, use) => {
     const pageTemplate = new PageTemplate(page);
     await use(pageTemplate);

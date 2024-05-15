@@ -1,4 +1,5 @@
 import { type Page, test as base } from '@playwright/test';
+
 import { ExercisePage } from '@exercise/pages/exercise-page.pom';
 import { ExerciseForm } from '@exercise/components/exercise-form.pom';
 import { ExerciseCard } from '@exercise/components/exercise-card.pom';
@@ -21,7 +22,6 @@ let page: Page;
 base.beforeAll(async ({ browser }) => {
   const context = await browser.newContext();
   page = await context.newPage();
-
   console.log('Esto se debe ejecutar una única vez antes de todos los test');
 
   const url = /http:\/\/localhost:3000\/exercises(\/\d+)?/;

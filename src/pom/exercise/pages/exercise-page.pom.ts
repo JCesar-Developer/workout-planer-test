@@ -1,7 +1,7 @@
 import { test as base, expect } from '@playwright/test';
 import type { Locator, Page } from "@playwright/test";
 
-export const test = base.extend<{exercisePage: ExercisePage}>({
+export const exercisePageFixture = base.extend<{exercisePage: ExercisePage}>({
   exercisePage: async ({ page }, use) => {
     const exercisePage = new ExercisePage(page);
     await exercisePage.goto();
